@@ -286,97 +286,116 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <!-- Custom JavaScript -->
   <script>
-    (function() {
-      const colors = ['#ffe6f0', '#e6e6fa', '#ffd700'];
-      document.body.style.cursor = 'default';
-  
-      
-      // Smooth scrolling for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
+  (function() {
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
         });
       });
-      // Parallax effect
-      window.addEventListener('scroll', function() {
-        document.querySelectorAll('.parallax-section').forEach(section => {
+    });
+
+    // Optimized Scroll Handler (Less flickering)
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
           const offset = window.pageYOffset;
-          section.style.backgroundPositionY = `${offset * 0.3}px`;
+
+          // Parallax (lighter)
+          const parallax = document.querySelector('.parallax-section');
+          if (parallax) {
+            parallax.style.backgroundPositionY = `${offset * 0.25}px`;
+          }
+
+          // Back to top button
+          const backToTop = document.querySelector('.back-to-top');
+          if (backToTop) {
+            backToTop.classList.toggle('show', offset > 300);
+          }
+
+          ticking = false;
         });
-        // Show/hide back to top button
-        const backToTop = document.querySelector('.back-to-top');
-        if (window.pageYOffset > 300) {
-          backToTop.classList.add('show');
-        } else {
-          backToTop.classList.remove('show');
+        ticking = true;
+      }
+    });
+
+    // Intersection Observer for fade-in (good for performance)
+    const elements = document.querySelectorAll('.category-card, .blog-list li, .footer-block');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
         }
       });
-      // Fade-in animations for cards and footer
-      const elements = document.querySelectorAll('.category-card, .blog-list li, .footer-block');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
-          }
-        });
-      }, { threshold: 0.2 });
-      elements.forEach(el => observer.observe(el));
-    })();
+    }, { threshold: 0.15 });
 
-    function searchBlogs(event) {
-      event.preventDefault();
-      const query = document.getElementById('search-input').value.toLowerCase();
-      const categories = document.querySelectorAll('.category-card');
-      let anyMatch = false;
-      categories.forEach(category => {
-        const blogs = category.querySelectorAll('ul.blog-list li');
-        let categoryHasMatch = false;
-        blogs.forEach(blog => {
-          const title = blog.querySelector('a').textContent.toLowerCase();
-          const desc = blog.querySelector('p').textContent.toLowerCase();
-          if (title.includes(query) || desc.includes(query)) {
-            blog.style.display = 'block';
-            categoryHasMatch = true;
-            anyMatch = true;
-          } else {
-            blog.style.display = 'none';
-          }
-        });
-        category.style.display = categoryHasMatch ? 'block' : 'none';
+    elements.forEach(el => observer.observe(el));
+  })();
+
+  // Search Function
+  function searchBlogs(event) {
+    event.preventDefault();
+    const query = document.getElementById('search-input').value.toLowerCase().trim();
+    const categories = document.querySelectorAll('.category-card');
+    let anyMatch = false;
+
+    categories.forEach(category => {
+      const blogs = category.querySelectorAll('ul.blog-list li');
+      let categoryHasMatch = false;
+
+      blogs.forEach(blog => {
+        const title = blog.querySelector('a').textContent.toLowerCase();
+        const desc = blog.querySelector('p').textContent.toLowerCase();
+
+        if (title.includes(query) || desc.includes(query)) {
+          blog.style.display = 'block';
+          categoryHasMatch = true;
+          anyMatch = true;
+        } else {
+          blog.style.display = 'none';
+        }
       });
-      const noResultMsg = document.getElementById('no-result');
-      noResultMsg.style.display = anyMatch ? 'none' : 'block';
-    }
 
-    function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-  </script>
-  <script>
-  // Hamburger Menu
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
+      category.style.display = categoryHasMatch ? 'block' : 'none';
+    });
 
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('active');
-    hamburger.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
-  });
-
-  function closeMenu() {
-    mobileMenu.classList.remove('active');
-    hamburger.textContent = '☰';
+    const noResultMsg = document.getElementById('no-result');
+    noResultMsg.style.display = anyMatch ? 'none' : 'block';
   }
 
-  // Close menu when link is clicked
-  document.querySelectorAll('.mobile-menu a').forEach(link => {
-    link.addEventListener('click', closeMenu);
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+</script>
+
+<!-- Hamburger Menu Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+        hamburger.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+      });
+
+      function closeMenu() {
+        mobileMenu.classList.remove('active');
+        hamburger.textContent = '☰';
+      }
+
+      document.querySelectorAll('.mobile-menu a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+    }
   });
 </script>
 </body>
