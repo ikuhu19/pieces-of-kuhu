@@ -171,6 +171,10 @@
             <a href="https://sliceofmydailylife.blogspot.com/2026/01/the-dual-nature-homo-sapiens.html" data-tooltip="The Dual Nature of Homo Sapiens">The dual nature of the homo sapiens.</a>
             <p>Dual nature of light and life.</p>
           </li>
+          <li>
+            <a href="https://sliceofmydailylife.blogspot.com/2026/05/bye-bye-teen-age.html" data-tooltip="Happy happy b'day to me">Its my birthday and I'm not teen anymore</a>
+            <p>Tribute to my teen age</p>
+          </li>
         </ul>
       </div>
       <div class="category-card">
@@ -201,6 +205,10 @@
           <li>
             <a href="https://deepthoflifewithkuhu.blogspot.com/2025/12/love-emotion-we-hype-hurt-and.html" data-tooltip="Love:An overrated emotion">Love: The Emotion We Hype, Hurt, and Misunderstand.</a>
             <p>Are all emotions as overhyped as Love?</p>
+          </li>
+          <li>
+            <a href="https://deepthoflifewithkuhu.blogspot.com/2026/03/understanding-minds-communicating-hearts.html" data-tooltip="Understnading heart to heart">understanding the link of heart and mind</a>
+            <p>When heart and mind sync in conversation</p>
           </li>
         </ul>
       </div>
@@ -264,21 +272,8 @@
     (function() {
       const colors = ['#ffe6f0', '#e6e6fa', '#ffd700'];
       document.body.style.cursor = 'default';
-      // Fairy dust cursor trail
-      document.addEventListener('mousemove', function(e) {
-        for (let i = 0; i < 3; i++) {
-          const sparkle = document.createElement('div');
-          sparkle.classList.add('cursor-trail');
-          const offsetX = Math.random() * 20 - 10;
-          const offsetY = Math.random() * 20 - 10;
-          sparkle.style.left = (e.clientX + offsetX) + 'px';
-          sparkle.style.top = (e.clientY + offsetY) + 'px';
-          const color = colors[Math.floor(Math.random() * colors.length)];
-          sparkle.style.background = `radial-gradient(circle, ${color}CC, rgba(255,255,255,0))`;
-          document.body.appendChild(sparkle);
-          sparkle.addEventListener('animationend', () => sparkle.remove());
-        }
-      });
+  
+      
       // Smooth scrolling for anchor links
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {

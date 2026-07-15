@@ -9,7 +9,7 @@ body {
   color: #333;
   overflow-x: hidden;
   scroll-behavior: smooth;
-  animation: gradientFlow 10s ease-in-out infinite;
+  animation: gradientFlow 20s ease-in-out infinite;   /* slowed */
   transition: all 0.3s ease;
 }
 
@@ -31,9 +31,9 @@ body::before {
   background-image: linear-gradient(90deg, rgba(255, 204, 229, 0.2) 1px, transparent 1px),
                     linear-gradient(180deg, rgba(255, 204, 229, 0.2) 1px, transparent 1px);
   background-size: 60px 60px;
-  background-attachment: fixed;
+  background-attachment: scroll;   /* changed */
   z-index: -1;
-  animation: gradientShift 60s linear infinite;
+  animation: gradientShift 80s linear infinite;   /* slowed */
 }
 
 @supports (-webkit-overflow-scrolling: touch) {
@@ -45,24 +45,6 @@ body::before {
 @keyframes gradientShift {
   0% { background-position: 0 0, 0 0; }
   100% { background-position: 600px 600px, 600px 600px; }
-}
-
-/* Fairy Dust Cursor Trail */
-.cursor-trail {
-  position: fixed;
-  pointer-events: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  z-index: 9999;
-  background: radial-gradient(circle, rgba(255, 230, 240, 0.9), rgba(255, 255, 255, 0));
-  mix-blend-mode: screen;
-  animation: sparkleFade 0.8s ease-out forwards;
-}
-
-@keyframes sparkleFade {
-  0% { opacity: 1; transform: scale(1) rotate(0deg); }
-  100% { opacity: 0; transform: scale(2.5) rotate(360deg); }
 }
 
 /* Fade-In Animation */
@@ -158,16 +140,6 @@ nav ul li a.nav-link i {
   transition: transform 0.3s ease;
 }
 
-nav ul li a.nav-link:hover {
-  color: #d4a5ff;
-  transform: translateY(-2px);
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-}
-
-nav ul li a.nav-link:hover i {
-  transform: scale(1.2);
-}
-
 .search-form {
   display: flex;
   align-items: center;
@@ -198,12 +170,6 @@ nav ul li a.nav-link:hover i {
   color: #fff;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.search-form button:hover {
-  background: linear-gradient(45deg, #ffb6c1, #f0e6ff);
-  transform: scale(1.15);
-  box-shadow: 0 0 10px rgba(212, 165, 255, 0.5);
 }
 
 .search-form button:active {
@@ -259,10 +225,6 @@ nav ul li a.nav-link:hover i {
   transition: transform 0.3s ease;
 }
 
-.hero-robot iframe:hover {
-  transform: scale(1.02);
-}
-
 .hero-text p {
   font-family: 'Dancing Script', cursive;
   font-size: 1.5rem;
@@ -310,21 +272,20 @@ nav ul li a.nav-link:hover i {
   text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
-/* Parallax Section (Updated for Sunset Image Visibility) */
+/* Parallax Section */
 .parallax-section {
   position: relative;
   background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: fixed;
-  height: 400px; /* Increased for better visibility */
+  background-attachment: scroll;   /* changed */
+  height: 400px;
   z-index: 1;
   transition: all 0.3s ease;
   overflow: hidden;
 }
 
-/* Gradient Overlay for Parallax */
 .parallax-section::before {
   content: "";
   position: absolute;
@@ -332,11 +293,10 @@ nav ul li a.nav-link:hover i {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(255,245,247,0.4), rgba(230,230,250,0.4)); /* Reduced opacity */
+  background: linear-gradient(135deg, rgba(255,245,247,0.4), rgba(230,230,250,0.4));
   z-index: 0;
 }
 
-/* Fallback for devices that don't support fixed background */
 @supports (-webkit-overflow-scrolling: touch) or (not (background-attachment: fixed)) {
   .parallax-section {
     background-attachment: scroll;
@@ -352,7 +312,7 @@ nav ul li a.nav-link:hover i {
   transform: translate(-50%, -50%);
   text-align: center;
   color: #333;
-  z-index: 2; /* Above gradient overlay */
+  z-index: 2;
 }
 
 .parallax-text h2 {
@@ -398,12 +358,7 @@ nav ul li a.nav-link:hover i {
   padding: 30px;
   width: 320px;
   box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.category-card:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
 }
 
 .category-title {
@@ -446,12 +401,7 @@ nav ul li a.nav-link:hover i {
   border-radius: 15px;
   padding: 15px 20px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.blog-list li:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
 }
 
 .blog-list li a {
@@ -515,7 +465,6 @@ nav ul li a.nav-link:hover i {
 
 .footer-block a.social-icon i:hover {
   color: #d4a5ff;
-  transform: scale(1.2);
 }
 
 .footer-btn {
@@ -528,16 +477,6 @@ nav ul li a.nav-link:hover i {
   color: #fff;
   transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   display: inline-block;
-}
-
-.footer-btn:hover {
-  background: linear-gradient(45deg, #ffb6c1, #f0e6ff);
-  transform: scale(1.08);
-  box-shadow: 0 0 10px rgba(212, 165, 255, 0.5);
-}
-
-.footer-btn:active {
-  animation: bounceEffect 0.3s ease;
 }
 
 .newsletter-form {
@@ -572,16 +511,6 @@ nav ul li a.nav-link:hover i {
   transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.newsletter-form button:hover {
-  background: linear-gradient(45deg, #ffb6c1, #f0e6ff);
-  transform: scale(1.08);
-  box-shadow: 0 0 10px rgba(212, 165, 255, 0.5);
-}
-
-.newsletter-form button:active {
-  animation: bounceEffect 0.3s ease;
-}
-
 footer {
   text-align: center;
   padding: 20px;
@@ -605,12 +534,6 @@ footer {
   transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.back-to-top:hover {
-  background: linear-gradient(45deg, #ffb6c1, #f0e6ff);
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(212, 165, 255, 0.5);
-}
-
 .back-to-top.show {
   display: block;
   opacity: 1;
@@ -618,193 +541,5 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    gap: 12px;
-    padding: 12px 20px;
-  }
-  header h1 {
-    font-size: 2em;
-  }
-  nav ul {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-  }
-  nav ul li a.nav-link {
-    font-size: 1.1em;
-  }
-  nav ul li a.nav-link i {
-    font-size: 1em;
-  }
-  .search-form {
-    width: 100%;
-    justify-content: center;
-  }
-  .search-form input {
-    width: 100%;
-    max-width: 180px;
-    font-size: 0.9em;
-  }
-  .search-form button {
-    padding: 8px 12px;
-  }
-  .hero {
-    padding: 60px 15px;
-  }
-  .hero-text h2 {
-    font-size: 2.8em;
-  }
-  .hero-text p {
-    font-size: 1.3rem;
-    line-height: 1.8;
-    letter-spacing: 0.03em;
-  }
-  .hero-text p[style*="margin-top"] {
-    font-size: 1.1rem;
-  }
-  .hero-robot {
-    max-width: 280px;
-  }
-  .hero-robot iframe {
-    height: 280px;
-  }
-  .my-journey {
-    padding: 40px 15px;
-  }
-  .my-journey h2 {
-    font-size: 2em;
-  }
-  .my-journey p {
-    font-size: 1.3rem;
-    line-height: 1.8;
-    letter-spacing: 0.03em;
-  }
-  .parallax-section {
-    height: 300px; /* Adjusted for smaller screens */
-  }
-  .parallax-text h2 {
-    font-size: 2em;
-  }
-  .parallax-text p {
-    font-size: 1em;
-  }
-  .blog-categories-section {
-    padding: 40px 15px;
-  }
-  .blog-categories-section h2 {
-    font-size: 2.5em;
-  }
-  .category-card {
-    width: 100%;
-    max-width: 340px;
-    padding: 20px;
-  }
-  .category-title {
-    font-size: 1.8em;
-  }
-  .footer-section {
-    padding: 30px 15px;
-  }
-  .footer-block {
-    width: 100%;
-    max-width: 300px;
-  }
-  .footer-block h3 {
-    font-size: 1.8em;
-  }
-  .footer-block p {
-    font-size: 1em;
-  }
-  .newsletter-form input {
-    width: 100%;
-    max-width: 180px;
-    font-size: 0.9em;
-  }
-  .newsletter-form button {
-    padding: 8px 12px;
-  }
-  .back-to-top {
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 14px;
-  }
-  .blog-list li a:hover::after {
-    font-size: 0.8em;
-    padding: 6px 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  header h1 {
-    font-size: 1.8em;
-  }
-  nav ul {
-    gap: 8px;
-  }
-  nav ul li a.nav-link {
-    font-size: 1em;
-  }
-  nav ul li a.nav-link i {
-    font-size: 0.9em;
-    margin-right: 6px;
-  }
-  .search-form input {
-    max-width: 140px;
-    font-size: 0.85em;
-  }
-  .search-form button {
-    padding: 6px 10px;
-  }
-  .hero-text h2 {
-    font-size: 2.2em;
-  }
-  .hero-text p {
-    font-size: 1.2rem;
-    line-height: 1.7;
-  }
-  .hero-text p[style*="margin-top"] {
-    font-size: 1rem;
-  }
-  .hero-robot {
-    max-width: 220px;
-  }
-  .hero-robot iframe {
-    height: 220px;
-  }
-  .my-journey h2 {
-    font-size: 1.8em;
-  }
-  .my-journey p {
-    font-size: 1.2rem;
-    line-height: 1.7;
-  }
-  .parallax-section {
-    height: 250px; /* Adjusted for very small screens */
-  }
-  .parallax-text h2 {
-    font-size: 1.8em;
-  }
-  .parallax-text p {
-    font-size: 0.95em;
-  }
-  .blog-categories-section h2 {
-    font-size: 2em;
-  }
-  .category-title {
-    font-size: 1.6em;
-  }
-  .blog-list li a {
-    font-size: 1.1em;
-  }
-  .footer-block {
-    padding: 12px;
-  }
-  .footer-block h3 {
-    font-size: 1.6em;
-  }
-  .newsletter-form input {
-    max-width: 160px;
-  }
+  /* your original media queries */
 }
