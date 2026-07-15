@@ -22,29 +22,44 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  
   <!-- Header -->
-  <header class="header-container">
-    <h1>Pieces of Kuhu</h1>
-    <nav>
-      <ul>
-        <li><a href="#home" class="nav-link"><i class="bi bi-house-fill"></i> Home</a></li>
-        <li><a href="#my-journey" class="nav-link"><i class="bi bi-journal-text"></i> My Journey</a></li>
-        <li><a href="#blog-categories" class="nav-link"><i class="bi bi-tags-fill"></i> Blog Categories</a></li>
-        <li><a href="#connect" class="nav-link"><i class="bi bi-envelope-fill"></i> Connect with me</a></li>
-      </ul>
-    </nav>
-    <div class="search-container">
-  <form class="search-form" onsubmit="searchBlogs(event)" aria-label="Search blog posts">
-    <input type="text" id="search-input" placeholder="Search blogs..." aria-label="Enter search term">
-    <button type="submit" aria-label="Submit search">
-      <i class="bi bi-search"></i>
-    </button>
-  </form>
+<header class="header-container">
+  <h1>Pieces of Kuhu</h1>
+  <nav>
+    <ul>
+      <li><a href="#home" class="nav-link"><i class="bi bi-house-fill"></i> Home</a></li>
+      <li><a href="#my-journey" class="nav-link"><i class="bi bi-journal-text"></i> My Journey</a></li>
+      <li><a href="#blog-categories" class="nav-link"><i class="bi bi-tags-fill"></i> Blog Categories</a></li>
+      <li><a href="#connect" class="nav-link"><i class="bi bi-envelope-fill"></i> Connect with me</a></li>
+    </ul>
+  </nav>
+  <div class="search-container">
+    <form class="search-form" onsubmit="searchBlogs(event)" aria-label="Search blog posts">
+      <input type="text" id="search-input" placeholder="Search blogs..." aria-label="Enter search term">
+      <button type="submit" aria-label="Submit search">
+        <i class="bi bi-search"></i>
+      </button>
+    </form>
+  </div>
+  
+  <!-- Hamburger -->
+  <button class="hamburger" id="hamburger">☰</button>
+
+  <p id="no-result" style="display:none; color:#fff; font-weight:bold; text-align:center; margin-top:10px; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">
+    No result found
+  </p>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#home" onclick="closeMenu()">Home</a></li>
+    <li><a href="#my-journey" onclick="closeMenu()">My Journey</a></li>
+    <li><a href="#blog-categories" onclick="closeMenu()">Blog Categories</a></li>
+    <li><a href="#connect" onclick="closeMenu()">Connect with me</a></li>
+  </ul>
 </div>
-    <p id="no-result" style="display:none; color:#fff; font-weight:bold; text-align:center; margin-top:10px; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">
-      No result found
-    </p>
-  </header>
 
   <!-- Hero Section -->
   <section class="hero fade-in" id="home">
@@ -344,5 +359,25 @@
       });
     }
   </script>
+  <script>
+  // Hamburger Menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+    hamburger.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+  });
+
+  function closeMenu() {
+    mobileMenu.classList.remove('active');
+    hamburger.textContent = '☰';
+  }
+
+  // Close menu when link is clicked
+  document.querySelectorAll('.mobile-menu a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+</script>
 </body>
 </html>
